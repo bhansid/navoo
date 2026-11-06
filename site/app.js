@@ -179,5 +179,15 @@
   var fitTimer;
   window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitPhones, 150); });
 
+
+  /* ---------- Image focus points set in /admin ---------- */
+  fetch('/api/images/config').then(function (r) { return r.ok ? r.json() : {}; }).then(function (cfg) {
+    Object.keys(cfg || {}).forEach(function (slot) {
+      var pos = cfg[slot] && cfg[slot].pos;
+      if (!pos || !/^[\d.]+% [\d.]+%$/.test(pos)) return;
+      document.querySelectorAll('img[data-img="' + slot + '"]').forEach(function (img) { img.style.objectPosition = pos; });
+    });
+  }).catch(function () {});
+
   var yr = document.getElementById('yr'); if (yr) yr.textContent = new Date().getFullYear();
 })();

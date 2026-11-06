@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Navoo Admin · Images</title>
+<link rel="icon" href="/img/mark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..750&display=swap">
+<style>
+:root{--navy:#16324F;--blue:#2F6B8A;--sage:#6FA58A;--off:#F7F8F6;--char:#172026;--muted:#5E7389;--line:#DCE5EC;--tint:#E8F1F6;--err:#B8324A;--ok:#2f7a52}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--off);color:var(--char);font-size:15px;line-height:1.45}
+button,input{font:inherit}h1,h2,h3,p{margin:0}.hide{display:none!important}
+.btn{border:0;border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;background:var(--blue);color:#fff;display:inline-flex;gap:8px;align-items:center;text-decoration:none;font-size:14px;white-space:nowrap}
+.btn:hover{background:#285D78}.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}.btn.ghost:hover{background:var(--tint)}
+.btn.danger{background:#fff;color:var(--err);border:1px solid #f0cdd3}.btn:disabled{opacity:.55;cursor:progress}
+input[type=password]{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;background:#fff}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,107,138,.15)}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px}
+.login .card{width:100%;max-width:380px;display:grid;gap:14px}.login img{height:32px;width:auto}
+.err{color:var(--err);font-size:14px}.okm{color:var(--ok);font-size:14px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.bar{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bar img{height:26px}.bar h1{font-size:16px;color:var(--navy);font-weight:650}.spacer{flex:1}
+main{max-width:1200px;margin:0 auto;padding:24px 20px 80px;display:grid;gap:18px}
+.note{background:var(--tint);border-radius:14px;padding:12px 16px;color:var(--navy);font-size:14px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+.slot{display:grid;gap:14px;align-content:start}
+.slot h3{font-size:16px;color:var(--navy);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#eef0f2;color:var(--muted)}
+.badge.custom{background:#E7F2EC;color:var(--ok)}
+.where{color:var(--muted);font-size:13px}
+.prev{position:relative;border-radius:14px;overflow:hidden;cursor:crosshair;background:#eef2f5 repeating-conic-gradient(#e3e8ec 0 25%,#f4f6f8 0 50%) 0 0/16px 16px;display:grid;place-items:center;min-height:120px}
+.prev img{display:block;max-width:100%;max-height:300px;width:auto;height:auto;user-select:none;-webkit-user-drag:none}
+.frame{position:relative;display:inline-block;max-width:100%;line-height:0}
+.prev .dot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--blue),0 2px 8px rgba(0,0,0,.4);pointer-events:none}
+.prev .guide{position:absolute;left:0;top:0;bottom:0;background:rgba(22,50,79,.35);border-right:2px dashed #fff;color:#fff;font-size:11px;font-weight:600;padding:6px;pointer-events:none;display:flex;align-items:flex-end}
+.prev.dark{background:var(--navy)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:13.5px}
+dt{color:var(--muted)}dd{margin:0;color:var(--char);font-weight:500}
+.tip{font-size:13px;color:#7a5a1d;background:#FEF6E7;border-radius:10px;padding:8px 12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.msg{font-size:13.5px}
+/* review dialog */
+dialog{border:0;border-radius:20px;padding:0;max-width:min(720px,94vw);width:100%;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(22,50,79,.5)}
+.dlg{padding:22px;display:grid;gap:16px}
+.dlg h2{font-size:18px;color:var(--navy)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.cmp{grid-template-columns:1fr}}
+.cmp .prev{min-height:160px;cursor:default}
+.cmp h4{margin:0 0 6px;font-size:13px;color:var(--muted);font-weight:600}
+.warn{font-size:13.5px;color:#7a5a1d;background:#FEF6E7;border-radius:10px;padding:10px 12px}
+label.chk{display:flex;gap:8px;align-items:center;font-size:14px}
+</style>
+</head>
+<body>
+
+<section id="login" class="login hide">
+  <form class="card" id="loginForm">
+    <img src="/img/logo" alt="Navoo">
+    <h1 style="font-size:20px;color:var(--navy)">Admin sign in</h1>
+    <input type="password" id="pw" placeholder="Admin password" autocomplete="current-password" required>
+    <button class="btn" type="submit">Sign in</button>
+    <p class="err" id="loginErr"></p>
+  </form>
+</section>
+
+<section id="app" class="hide">
+  <header><div class="bar">
+    <img src="/img/logo" alt="Navoo"><h1>Images</h1>
+    <span class="spacer"></span>
+    <a class="btn ghost" href="/" target="_blank" rel="noopener">View site</a>
+    <button class="btn ghost" id="logout">Sign out</button>
+  </div></header>
+  <main>
+    <div class="note">
+      <strong>How it works:</strong> upload any photo and it's automatically resized to the right dimensions and compressed. Changes go live on the site within about a minute, with no redeploy needed. <strong>Click on a preview</strong> to set the focus point, which is the part of the photo that stays visible when the image is cropped on different screens.
+    </div>
+    <div class="grid" id="slots"></div>
+  </main>
+</section>
+
+<dialog id="review">
+  <form method="dialog" class="dlg">
+    <h2 id="rvTitle">Review image</h2>
+    <div class="cmp">
+      <div><h4>Your file</h4><div class="prev" id="rvOrig"></div><dl id="rvOrigInfo" style="margin-top:8px"></dl></div>
+      <div><h4>What will be uploaded</h4><div class="prev" id="rvOut"></div><dl id="rvOutInfo" style="margin-top:8px"></dl></div>
+    </div>
+    <div class="warn hide" id="rvWarn"></div>
+    <label class="chk hide" id="rvCropWrap"><input type="checkbox" id="rvCrop"> Crop to the recommended shape</label>
+    <p class="err" id="rvErr"></p>
+    <div class="actions">
+      <button class="btn" type="button" id="rvSave">Upload &amp; publish</button>
+      <button class="btn ghost" value="cancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var kb = function (b) { return b ? (b > 1048576 ? (b / 1048576).toFixed(2) + ' MB' : Math.round(b / 1024) + ' KB') : '–'; };
+  var TOKEN_KEY = 'navoo_admin_token';
+  var token = '';
+  try { token = sessionStorage.getItem(TOKEN_KEY) || ''; } catch (e) {}
+  var slots = [];
+
+  function api(url, opt) {
+    opt = opt || {};
+    opt.headers = Object.assign({ Authorization: 'Bearer ' + token }, opt.headers || {});
+    return fetch(url, opt).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (r.status === 401 && url.indexOf('/login') < 0) { show('login'); throw new Error(j.error || 'Please sign in.'); }
+        if (!r.ok) throw new Error(j.error || ('Error ' + r.status));
+        return j;
+      });
+    });
+  }
+  function show(v) { $('#login').classList.toggle('hide', v !== 'login'); $('#app').classList.toggle('hide', v !== 'app'); }
+
+  $('#loginForm').onsubmit = function (e) {
+    e.preventDefault(); $('#loginErr').textContent = '';
+    fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: $('#pw').value }) })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'Sign in failed'); return j; }); })
+      .then(function (j) { token = j.token; try { sessionStorage.setItem(TOKEN_KEY, token); } catch (e) {} show('app'); load(); })
+      .catch(function (err) { $('#loginErr').textContent = err.message; });
+  };
+  $('#logout').onclick = function () { token = ''; try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {} show('login'); };
+
+  function load() {
+    return api('/api/admin/images').then(function (j) { slots = j.slots; render(); }).catch(function () {});
+  }
+
+  function render() {
+    $('#slots').innerHTML = slots.map(function (s) {
+      var src = '/img/' + s.key + (s.updated ? '?v=' + s.updated : '');
+      var xy = (s.pos || '50% 50%').split(' ');
+      var dark = s.key === 'logo' || s.key === 'mark' ? '' : '';
+      return '<article class="card slot" data-key="' + s.key + '">' +
+        '<h3>' + esc(s.label) + ' <span class="badge ' + (s.custom ? 'custom' : '') + '">' + (s.custom ? 'Custom' : 'Default') + '</span></h3>' +
+        '<p class="where">' + esc(s.where) + '</p>' +
+        '<div class="prev' + dark + '" data-focus title="Click to set the focus point">' +
+          '<span class="frame"><img src="' + src + '" alt="" draggable="false">' +
+          (s.key === 'hero' ? '<span class="guide" style="width:12%">phone</span>' : '') +
+          '<span class="dot" style="left:' + xy[0] + ';top:' + xy[1] + '"></span></span>' +
+        '</div>' +
+        '<dl>' +
+          '<dt>Recommended</dt><dd>' + s.rec.w + ' × ' + s.rec.h + ' px' + (s.fit === 'cover' ? ' (cropped to this shape)' : ' max (keeps its shape)') + '</dd>' +
+          '<dt>Shown on page</dt><dd>' + esc(s.shown) + '</dd>' +
+          '<dt>Current file</dt><dd class="cur">' + (s.custom ? s.width + ' × ' + s.height + ' px · ' + kb(s.bytes) : 'default image') + '</dd>' +
+          '<dt>Format</dt><dd>' + s.format.replace('image/', '').toUpperCase() + '</dd>' +
+          '<dt>Focus point</dt><dd class="posv">' + esc(s.pos) + '</dd>' +
+          (s.updated ? '<dt>Updated</dt><dd>' + new Date(s.updated).toLocaleString() + '</dd>' : '') +
+        '</dl>' +
+        (s.tip ? '<p class="tip">' + esc(s.tip) + '</p>' : '') +
+        '<div class="actions">' +
+          '<label class="btn">Replace image<input type="file" accept="image/*" hidden data-upload></label>' +
+          (s.custom || s.pos !== s.defaultPos ? '<button class="btn danger" type="button" data-reset>Reset to default</button>' : '') +
+          '<span class="msg"></span>' +
+        '</div>' +
+      '</article>';
+    }).join('');
+    // natural size of default images
+    document.querySelectorAll('.slot').forEach(function (card) {
+      var s = slots.find(function (x) { return x.key === card.dataset.key; });
+      var img = $('.prev img', card);
+      if (!s.custom) img.addEventListener('load', function () { $('.cur', card).textContent = 'default image · ' + img.naturalWidth + ' × ' + img.naturalHeight + ' px'; });
+    });
+  }
+
+  function msg(card, text, ok) { var m = $('.msg', card); m.className = 'msg ' + (ok ? 'okm' : 'err'); m.textContent = text; if (ok) setTimeout(function () { m.textContent = ''; }, 5000); }
+
+  /* ---------- focus point ---------- */
+  $('#slots').addEventListener('click', function (e) {
+    var prev = e.target.closest('[data-focus]'); if (!prev) return;
+    var img = $('img', prev), r = img.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+    var x = Math.round((e.clientX - r.left) / r.width * 100), y = Math.round((e.clientY - r.top) / r.height * 100);
+    var pos = x + '% ' + y + '%', card = prev.closest('.slot'), key = card.dataset.key;
+    var dot = $('.dot', prev);
+    dot.style.left = x + '%'; dot.style.top = y + '%';
+    api('/api/admin/images/' + key, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pos: pos }) })
+      .then(function () { var s = slots.find(function (x) { return x.key === key; }); s.pos = pos; $('.posv', card).textContent = pos; msg(card, 'Focus saved', true); })
+      .catch(function (err) { msg(card, err.message); });
+  });
+  /* ---------- reset ---------- */
+  $('#slots').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-reset]'); if (!b) return;
+    var card = b.closest('.slot');
+    if (!confirm('Go back to the original image for "' + slots.find(function (x) { return x.key === card.dataset.key; }).label + '"?')) return;
+    api('/api/admin/images/' + card.dataset.key, { method: 'DELETE' }).then(load).catch(function (err) { msg(card, err.message); });
+  });
+
+  /* ---------- upload: resize + convert in the browser, review, then send ---------- */
+  var pending = null;
+  $('#slots').addEventListener('change', function (e) {
+    if (!e.target.matches('[data-upload]')) return;
+    var file = e.target.files[0]; e.target.value = '';
+    if (!file) return;
+    var card = e.target.closest('.slot'), s = slots.find(function (x) { return x.key === card.dataset.key; });
+    if (!/^image\//.test(file.type)) return msg(card, 'Please choose an image file.');
+    loadImage(file).then(function (img) {
+      pending = { s: s, card: card, file: file, img: img };
+      var ratioRec = s.rec.w / s.rec.h, ratio = img.naturalWidth / img.naturalHeight;
+      var off = Math.abs(ratio - ratioRec) / ratioRec;
+      $('#rvCrop').checked = s.fit === 'cover';
+      $('#rvCropWrap').classList.toggle('hide', s.fit === 'cover' || off < 0.04 || s.key === 'logo' || s.key === 'mark');
+      var warn = [];
+      if (img.naturalWidth < s.rec.w * 0.6 && img.naturalHeight < s.rec.h * 0.6) warn.push('This image is smaller than recommended (' + s.rec.w + ' × ' + s.rec.h + '), so it may look blurry on large screens.');
+      if (s.fit !== 'cover' && off >= 0.15 && s.key !== 'logo' && s.key !== 'mark') warn.push('Its shape is different from the recommended ' + s.rec.w + ':' + s.rec.h + '. The page will crop it to fit; check the focus point after uploading, or tick "Crop to the recommended shape".');
+      $('#rvWarn').innerHTML = warn.map(esc).join('<br>'); $('#rvWarn').classList.toggle('hide', !warn.length);
+      $('#rvTitle').textContent = 'Replace: ' + s.label;
+      $('#rvOrig').innerHTML = ''; var o = new Image(); o.src = img.src; $('#rvOrig').appendChild(o);
+      $('#rvOrigInfo').innerHTML = '<dt>Size</dt><dd>' + img.naturalWidth + ' × ' + img.naturalHeight + ' px</dd><dt>File</dt><dd>' + kb(file.size) + ' · ' + esc(file.type.replace('image/', '').toUpperCase()) + '</dd>';
+      $('#rvErr').textContent = '';
+      return process();
+    }).then(function () { $('#review').showModal(); })
+      .catch(function (err) { msg(card, err.message || 'Could not read that image.'); });
+  });
+  $('#rvCrop').addEventListener('change', function () { process(); });
+
+  function loadImage(file) {
+    return new Promise(function (res, rej) {
+      var img = new Image(); img.onload = function () { res(img); }; img.onerror = function () { rej(new Error('Could not read that image. Try a JPG or PNG.')); };
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  function process() {
+    var p = pending, s = p.s, img = p.img;
+    var sw = img.naturalWidth, sh = img.naturalHeight, sx = 0, sy = 0;
+    if ($('#rvCrop').checked) {               // crop to recommended shape around the focus point
+      var target = s.rec.w / s.rec.h, xy = (s.pos || '50% 50%').split(' ').map(function (v) { return parseFloat(v) / 100; });
+      if (sw / sh > target) { var nw = Math.round(sh * target); sx = Math.round((sw - nw) * xy[0]); sw = nw; }
+      else { var nh = Math.round(sw / target); sy = Math.round((sh - nh) * xy[1]); sh = nh; }
+    }
+    var scale = Math.min(1, s.rec.w / sw, s.rec.h / sh);
+    var w = Math.max(1, Math.round(sw * scale)), h = Math.max(1, Math.round(sh * scale));
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var ctx = c.getContext('2d'); ctx.imageSmoothingQuality = 'high';
+    if (s.format === 'image/jpeg') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); }
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
+    return toBlob(c, s.format).then(function (blob) {
+      p.blob = blob; p.w = w; p.h = h; p.canvas = c;
+      $('#rvOut').innerHTML = ''; var o = new Image(); o.src = URL.createObjectURL(blob); $('#rvOut').appendChild(o);
+      $('#rvOutInfo').innerHTML = '<dt>Size</dt><dd>' + w + ' × ' + h + ' px</dd><dt>File</dt><dd>' + kb(blob.size) + ' · ' + blob.type.replace('image/', '').toUpperCase() + '</dd>';
+    });
+  }
+  function toBlob(canvas, type) {
+    return new Promise(function (res) {
+      canvas.toBlob(function (b) {
+        if (b && b.type === type) return res(b);
+        // Browser can't make WebP: use JPEG for photos, PNG otherwise
+        canvas.toBlob(function (b2) { res(b2); }, type === 'image/png' ? 'image/png' : 'image/jpeg', 0.86);
+      }, type, 0.86);
+    });
+  }
+  function whiteVersion(canvas) {
+    var c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height;
+    var ctx = c.getContext('2d'); ctx.drawImage(canvas, 0, 0);
+    ctx.globalCompositeOperation = 'source-in'; ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    return toBlob(c, 'image/png');
+  }
+  function put(key, blob, w, h) {
+    return api('/api/admin/images/' + key, { method: 'PUT', headers: { 'Content-Type': blob.type, 'X-Width': String(w), 'X-Height': String(h) }, body: blob });
+  }
+
+  $('#rvSave').onclick = function () {
+    var p = pending, btn = this;
+    btn.disabled = true; btn.textContent = 'Uploading…'; $('#rvErr').textContent = '';
+    var job = put(p.s.key, p.blob, p.w, p.h);
+    if (p.s.key === 'mark') job = job.then(function () { return whiteVersion(p.canvas).then(function (b) { return put('mark-white', b, p.w, p.h); }); });
+    job.then(function () { $('#review').close(); return load(); })
+      .then(function () { var card = document.querySelector('.slot[data-key="' + p.s.key + '"]'); if (card) msg(card, 'Published. Live on the site within about a minute.', true); })
+      .catch(function (err) { $('#rvErr').textContent = err.message; })
+      .finally(function () { btn.disabled = false; btn.textContent = 'Upload & publish'; });
+  };
+
+  if (token) { show('app'); load(); } else show('login');
+})();
+</script>
+</body>
+</html>

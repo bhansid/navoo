@@ -93,7 +93,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .msg.coach.solid{background:var(--blue);color:#fff}
 .msg-row{display:flex;gap:.5em;align-items:flex-start}
 .msg-row .msg{flex:1}
-.avatar{width:1.95em;height:1.95em;border-radius:50%;flex-shrink:0;background:var(--navy) url("/assets/navoo-mark-white.png") center/62% no-repeat;margin-top:.1em}
+.avatar{width:1.95em;height:1.95em;border-radius:50%;flex-shrink:0;background:var(--navy) url("/img/mark-white") center/62% no-repeat;margin-top:.1em}
 .avatar.me{background:linear-gradient(140deg,var(--peach),var(--coral));position:relative}
 .avatar.me::after{content:"";position:absolute;inset:.5em .6em .3em;border-radius:50% 50% 40% 40%;background:rgba(255,255,255,.75)}
 .opts{display:grid;gap:.5em;padding-left:2.45em}
@@ -180,9 +180,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ---------- CHEAT CODES ---------- */
 .codes{position:relative;padding:0 0 72px;background:var(--off);overflow:hidden}
-.codes-photo{position:relative;height:500px;margin-bottom:-110px}
-.codes-photo img{width:100%;height:100%;object-fit:cover;object-position:35% 0}
-.codes-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,248,246,0) 50%,var(--off) 94%)}
+.codes-photo{position:relative;height:min(133vw, 640px);margin-bottom:28px}
+.codes-photo img{width:100%;height:100%;object-fit:cover;object-position:30% 0}
+.codes-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,248,246,0) 78%,var(--off) 100%)}
 .codes-inner{position:relative;z-index:1}
 .phone-row{--pw:272px;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;margin:32px calc(var(--gutter) * -1) 0;padding:12px var(--gutter) 40px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .phone-row::-webkit-scrollbar{display:none}
@@ -246,7 +246,6 @@ ul,ol{margin:0;padding:0;list-style:none}
   .trio-left{transform:translateX(calc(-50% - 170px)) scale(.9) rotate(-3deg)}
   .trio-right{transform:translateX(calc(-50% + 170px)) scale(.9) rotate(3deg)}
   .phone-row{--pw:290px}
-  .codes-photo{height:620px;margin-bottom:-160px}
 }
 
 /* ---------- ≥ 1024 desktop ---------- */

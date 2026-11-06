@@ -55,6 +55,7 @@ Total time: about 20 minutes. You need a Google account, a GitHub account and a 
 | `META_TEST_EVENT_CODE` | e.g. `TEST12345` from Events Manager → Test events - **delete after testing** | optional |
 | `GTM_ID` | `GTM-XXXXXXX` | optional |
 | `GA4_ID` | `G-XXXXXXXXXX` (skip if GA4 is set up inside GTM) | optional |
+| `ADMIN_PASSWORD` | password for `/admin` (image manager) | for admin |
 | `GOOGLE_ADS_ID` / `GOOGLE_ADS_LEAD_LABEL` | `AW-…` and the conversion label | optional |
 
 4. Click **Deploy**. After ~1 minute you get a URL like `navoo-123.netlify.app`.
@@ -77,6 +78,18 @@ Netlify → **Domain management → Add a domain** → follow the DNS instructio
 Data layer events for GTM: `waitlist_form_start`, `cta_click`, `waitlist_signup` (with `event_id`, `form_location`, `duplicate`).
 
 Keep the Meta Pixel in the `META_PIXEL_ID` variable, **not** inside GTM as well, or PageView and Lead will count twice. Use GTM for everything else.
+
+## Changing images (admin)
+
+1. In Netlify, go to **Project configuration → Environment variables** and add `ADMIN_PASSWORD` with a long password of your choice. Then go to **Deploys → Trigger deploy → Deploy project**.
+2. Open `yoursite.netlify.app/admin` and sign in.
+3. Each image on the page has a card showing where it appears, its recommended size, how big it shows on the page, and the current file's dimensions.
+   - **Replace image:** pick any JPG/PNG/WebP. It's resized and compressed in your browser to the right size and format before upload. You see a before/after review first.
+   - **Click a preview** to set the focus point, the part of the photo that stays visible when it's cropped on different screens.
+   - **Reset to default** brings back the original image.
+4. Changes are live within about a minute. No redeploy and no Netlify build credits used.
+
+Uploaded images are stored in Netlify Blobs (part of your Netlify project), not in GitHub.
 
 ## Extra scripts
 Paste TikTok, Clarity, Hotjar or a cookie banner into `tracking/custom-head.html` (edit it on GitHub). It's added on the next deploy.

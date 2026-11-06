@@ -1,4 +1,4 @@
-/* Navoo landing — forms, attribution, tracking events. No dependencies. */
+/* Navoo landing - forms, attribution, tracking events. No dependencies. */
 (function () {
   'use strict';
   var API = '/api/subscribe';
@@ -156,6 +156,28 @@
       el.classList.add('reveal'); io.observe(el);
     });
   }
+
+
+  /* ---------- Keep every phone's content inside its 9:16 frame ----------
+     Phones are sized in CSS; if a font or screen size makes a chat run long,
+     shrink that phone's text slightly until it fits. */
+  function fitPhones() {
+    document.querySelectorAll('.phone').forEach(function (ph) {
+      var body = ph.querySelector('.chat, .screen');
+      if (!body) return;
+      var fs = 1;
+      ph.style.setProperty('--fs', fs);
+      while (body.scrollHeight > body.clientHeight + 1 && fs > 0.78) {
+        fs = Math.round((fs - 0.03) * 100) / 100;
+        ph.style.setProperty('--fs', fs);
+      }
+    });
+  }
+  fitPhones();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPhones);
+  window.addEventListener('load', fitPhones);
+  var fitTimer;
+  window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitPhones, 150); });
 
   var yr = document.getElementById('yr'); if (yr) yr.textContent = new Date().getFullYear();
 })();

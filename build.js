@@ -27,7 +27,7 @@ const s = {};
 for (const [k, re] of Object.entries(RULES)) {
   const v = env(k);
   if (!v) continue;
-  if (!re.test(v)) { console.warn(`⚠ ${k}="${v}" doesn't look valid — skipped. Check the value in Netlify env vars.`); continue; }
+  if (!re.test(v)) { console.warn(`⚠ ${k}="${v}" doesn't look valid - skipped. Check the value in Netlify env vars.`); continue; }
   s[k] = v;
 }
 
@@ -55,4 +55,4 @@ const idx = path.join(OUT, 'index.html');
 fs.writeFileSync(idx, fs.readFileSync(idx, 'utf8').replace('<!--NAVOO_HEAD-->', head.join('\n')).replace('<!--NAVOO_BODY-->', body.join('\n')));
 
 console.log('✓ Built dist/ with:', Object.keys(s).length ? Object.keys(s).join(', ') : 'no tracking IDs set');
-if (!env('SHEETS_WEBHOOK_URL')) console.warn('⚠ SHEETS_WEBHOOK_URL is not set — sign-ups will fail until you add it.');
+if (!env('SHEETS_WEBHOOK_URL')) console.warn('⚠ SHEETS_WEBHOOK_URL is not set - sign-ups will fail until you add it.');

@@ -310,3 +310,6 @@ ul,ol{margin:0;padding:0;list-style:none}
   .codes{--photo-w:min(38vw, 700px)}
   .phone-row{--pw:300px;gap:28px}
 }
+
+.legal-note{font-size:13px;color:var(--muted);margin-top:8px}.legal-note a{color:var(--muted)}
+.join .legal-note{color:rgba(255,255,255,.8)}.join .legal-note a{color:#fff}

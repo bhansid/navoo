@@ -51,6 +51,18 @@ if (custom('custom-body.html')) body.push(custom('custom-body.html'));
 
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.cpSync(SRC, OUT, { recursive: true });
+// Legal pages: fill in the company name and contact email from env vars
+const escHtml = v => v.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const contactEmail = env('CONTACT_EMAIL');
+const contactHtml = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(contactEmail)
+  ? `at <a href="mailto:${escHtml(contactEmail)}">${escHtml(contactEmail)}</a>`
+  : 'by replying to any email we have sent you';
+if (!contactEmail) console.warn('⚠ CONTACT_EMAIL is not set - the Privacy Policy and Terms will tell people to reply to an email instead.');
+const company = escHtml(env('COMPANY_NAME') || 'Navoo');
+for (const f of ['privacy.html', 'terms.html']) {
+  const p = path.join(OUT, f);
+  if (fs.existsSync(p)) fs.writeFileSync(p, fs.readFileSync(p, 'utf8').replace(/\{\{CONTACT\}\}/g, contactHtml).replace(/\{\{COMPANY\}\}/g, company));
+}
 const idx = path.join(OUT, 'index.html');
 fs.writeFileSync(idx, fs.readFileSync(idx, 'utf8').replace('<!--NAVOO_HEAD-->', head.join('\n')).replace('<!--NAVOO_BODY-->', body.join('\n')));
 

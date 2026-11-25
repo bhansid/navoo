@@ -26,6 +26,23 @@ function limited(ip) {
   return ++b.n > 8;
 }
 
+/* Also add the lead to the shared Navoo email list (Google Sheet), if configured.
+ * Env: LEADS_WEBHOOK_URL (the list's Apps Script /exec URL), LEADS_SECRET. Never throws. */
+async function addToLeadsList(email, name, source) {
+  const url = env('LEADS_WEBHOOK_URL');
+  if (!url) return 'off';
+  try {
+    const r = await fetch(url, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: 'follow',
+      body: JSON.stringify({ secret: env('LEADS_SECRET'), email, name: name || '', source }),
+      signal: AbortSignal.timeout(7000),
+    });
+    const out = await r.json().catch(() => ({}));
+    if (!out.ok) console.error('[leads list]', out.error || 'HTTP ' + r.status);
+    return out.ok ? 'ok' : 'error';
+  } catch (err) { console.error('[leads list]', err.message); return 'error'; }
+}
+
 async function saveToSheet(row) {
   const url = env('SHEETS_WEBHOOK_URL');
   if (!url) throw new Error('SHEETS_WEBHOOK_URL not configured');
@@ -98,12 +115,14 @@ export default async (req, context) => {
     fbp: clip(b.fbp, 120), fbc: clip(b.fbc, 400),
   };
 
+  const listed = addToLeadsList(row.email, '', 'navoo.ai waitlist');
   let saved;
   try { saved = await saveToSheet(row); }
   catch (err) {
     console.error('[sheet]', err.message);
     return json(502, { error: 'We couldn’t save your sign-up just now. Please try again in a moment.' });
   }
+  await listed;
   if (saved.duplicate) return json(200, { ok: true, duplicate: true });
 
   try { await sendMetaLead(row, ip, ua); } catch (err) { console.error('[capi]', err.message); } // never block the user on this

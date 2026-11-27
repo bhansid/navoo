@@ -20,7 +20,9 @@ export default async (req, context) => {
   try {
     const store = getStore({ name: 'site-images', consistency: 'strong' });
     const entry = await store.getWithMetadata(slot, { type: 'arrayBuffer' });
-    if (entry && entry.data) {
+    const uploaded = entry && entry.metadata && Number(entry.metadata.updated);
+    const stale = def.ignoreUploadsBefore && (!uploaded || uploaded < def.ignoreUploadsBefore);
+    if (entry && entry.data && !stale) {
       const etag = '"' + ((entry.metadata && entry.metadata.updated) || entry.etag || 'x').toString().replace(/"/g, '') + '"';
       if (req.headers.get('if-none-match') === etag) return new Response(null, { status: 304, headers: { ...CACHE, ETag: etag } });
       return new Response(entry.data, {

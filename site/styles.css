@@ -123,7 +123,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hero .h1 .accent{display:block}
 .hero-visual{--pw:250px;position:relative;margin:0 calc(var(--gutter) * -1)}
 .hero-photo{position:relative;width:100%;aspect-ratio:3/4;border-top-left-radius:200px;overflow:hidden;background:#e9eef0}
-.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:0 0}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 0}
 .phone-hero{display:none;position:absolute;z-index:2;--fs:.91}
 .leaf{display:none;position:absolute;color:var(--sage);fill:rgba(111,165,138,.9);stroke:#4f8a6c;stroke-width:.9;z-index:1}
 .leaf-1{width:110px;height:110px;transform:rotate(-30deg);opacity:.85}
